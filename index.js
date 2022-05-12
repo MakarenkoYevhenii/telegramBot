@@ -28,7 +28,7 @@ bot.on("message", async (msg) => {
     if (!data) {
       return "такого города нет"
     }
-
+    console.log(data);
     const rassvet = new Date(data.sys.sunrise * 1000).toLocaleString();
     const zakakt = new Date(data.sys.sunset * 1000).toLocaleString();
     const pogoda = `Город ${data.name}: Чистота неба ${data.weather[0].description},температура ${data.main.temp} за цельсием, чувствуется как ${data.main.feels_like} за цельсием, рассвет:${rassvet} закат:${zakakt}`
