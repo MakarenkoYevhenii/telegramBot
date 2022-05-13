@@ -6,11 +6,9 @@ import telegramApi from "node-telegram-bot-api";
 const token = "5327333149:AAFywhnv5Q5s4rf3qoL48Zw6z51p6rf_1f4";
 import { weather } from "./service/weather.js";
 const bot = new telegramApi(token, { polling: true });
-const app=express()
+export const app=express()
 
-app.listen(3001 || process.env.PORT, '0.0.0.0', () => {
-  console.log("Server is running.");
-});
+
 
 bot.on("message", async (msg) => {
   const chatid = msg.chat.id;
