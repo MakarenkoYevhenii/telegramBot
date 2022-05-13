@@ -5,11 +5,9 @@ import telegramApi from "node-telegram-bot-api";
 const token = "5327333149:AAFywhnv5Q5s4rf3qoL48Zw6z51p6rf_1f4";
 import { weather } from "./service/weather.js";
 const bot = new telegramApi(token, { polling: true });
-bot.setMyCommands([
-  { command: "/start", description: "начало" },
-  { command: "/weather", description: "погода" },
-  { command: "/finish", description: "конец" },
-]);
+import express from "express"
+
+export const  app = express()
 
 bot.on("message", async (msg) => {
   const chatid = msg.chat.id;
@@ -26,8 +24,6 @@ bot.on("message", async (msg) => {
     if (!data) {
       return "такого города нет"
     }
-  
-    console.log(data.daily[0]);
     const den1 = `Дата: ${new Date(data.daily[0].dt * 1000).toLocaleString()} Город: ${msg.text}.
 Чистота неба ${data.daily[0].weather[0].description},температура ${data.daily[0].temp.day} за цельсием, чувствуется как ${data.daily[0].feels_like.day} за цельсием, рассвет:${new Date(data.daily[0].sunrise * 1000).toLocaleString()} закат:${new Date(data.daily[0].sunset * 1000).toLocaleString()}`
     const den2 = `Дата: ${new Date(data.daily[1].dt * 1000).toLocaleString()} Город: ${msg.text}.
@@ -62,4 +58,5 @@ const prognoz=`${den1}
   const normalaise = msg.text.toLowerCase();
 
   return bot.sendMessage(chatid, await getWeather(msg.text))
-});
+})
+
