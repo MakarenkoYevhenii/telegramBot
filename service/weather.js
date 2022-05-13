@@ -5,20 +5,17 @@ const instance = axios.create({
 });
 
 export const weather = async (city) => {
-  console.log(city);
+
     const realCity= encodeURI(city)
   const weather = axios.get(
     `https://api.openweathermap.org/geo/1.0/direct?q={${realCity}}&appid=1bc53850ac3dbc4ed826ef6c69bf5c08`
   );
     try {
       const lat=(await weather).data[0].lat
-    const lon=(await weather).data[0].lon
-    const data=instance.get(`weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`)
+      const lon=(await weather).data[0].lon
+      const data=instance.get(`onecall?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`)
   return((await data).data);
     } catch (error) {
       return console.log(error.message);
     }
-    
-
-  
 };

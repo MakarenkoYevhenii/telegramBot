@@ -5,11 +5,9 @@ import telegramApi from "node-telegram-bot-api";
 const token = "5327333149:AAFywhnv5Q5s4rf3qoL48Zw6z51p6rf_1f4";
 import { weather } from "./service/weather.js";
 const bot = new telegramApi(token, { polling: true });
-
 bot.setMyCommands([
   { command: "/start", description: "начало" },
   { command: "/weather", description: "погода" },
-
   { command: "/finish", description: "конец" },
 ]);
 
@@ -28,17 +26,40 @@ bot.on("message", async (msg) => {
     if (!data) {
       return "такого города нет"
     }
-    console.log(data);
-    const rassvet = new Date(data.sys.sunrise * 1000).toLocaleString();
-    const zakakt = new Date(data.sys.sunset * 1000).toLocaleString();
-    const pogoda = `Город ${data.name}: Чистота неба ${data.weather[0].description},температура ${data.main.temp} за цельсием, чувствуется как ${data.main.feels_like} за цельсием, рассвет:${rassvet} закат:${zakakt}`
-    return pogoda;
+  
+    console.log(data.daily[0]);
+    const den1 = `Дата: ${new Date(data.daily[0].dt * 1000).toLocaleString()} Город: ${msg.text}.
+Чистота неба ${data.daily[0].weather[0].description},температура ${data.daily[0].temp.day} за цельсием, чувствуется как ${data.daily[0].feels_like.day} за цельсием, рассвет:${new Date(data.daily[0].sunrise * 1000).toLocaleString()} закат:${new Date(data.daily[0].sunset * 1000).toLocaleString()}`
+    const den2 = `Дата: ${new Date(data.daily[1].dt * 1000).toLocaleString()} Город: ${msg.text}.
+Чистота неба ${data.daily[1].weather[0].description},температура ${data.daily[1].temp.day} за цельсием, чувствуется как ${data.daily[1].feels_like.day} за цельсием, рассвет:${new Date(data.daily[1].sunrise * 1000).toLocaleString()} закат:${new Date(data.daily[1].sunset * 1000).toLocaleString()}`
+    const den3 = `Дата: ${new Date(data.daily[2].dt * 1000).toLocaleString()} Город: ${msg.text}.
+Чистота неба ${data.daily[2].weather[0].description},температура ${data.daily[2].temp.day} за цельсием, чувствуется как ${data.daily[2].feels_like.day} за цельсием, рассвет:${new Date(data.daily[2].sunrise * 1000).toLocaleString()} закат:${new Date(data.daily[2].sunset * 1000).toLocaleString()}`
+    const den4 = `Дата: ${new Date(data.daily[3].dt * 1000).toLocaleString()} Город: ${msg.text}.
+Чистота неба ${data.daily[3].weather[0].description},температура ${data.daily[3].temp.day} за цельсием, чувствуется как ${data.daily[3].feels_like.day} за цельсием, рассвет:${new Date(data.daily[3].sunrise * 1000).toLocaleString()} закат:${new Date(data.daily[3].sunset * 1000).toLocaleString()}`
+    const den5 = `Дата: ${new Date(data.daily[4].dt * 1000).toLocaleString()} Город: ${msg.text}.
+Чистота неба ${data.daily[4].weather[0].description},температура ${data.daily[4].temp.day} за цельсием, чувствуется как ${data.daily[4].feels_like.day} за цельсием, рассвет:${new Date(data.daily[4].sunrise * 1000).toLocaleString()} закат:${new Date(data.daily[4].sunset * 1000).toLocaleString()}`
+    const den6 = `Дата: ${new Date(data.daily[5].dt * 1000).toLocaleString()} Город: ${msg.text}.
+Чистота неба ${data.daily[5].weather[0].description},температура ${data.daily[5].temp.day} за цельсием, чувствуется как ${data.daily[5].feels_like.day} за цельсием, рассвет:${new Date(data.daily[5].sunrise * 1000).toLocaleString()} закат:${new Date(data.daily[5].sunset * 1000).toLocaleString()}`
+    const den7 = `Дата: ${new Date(data.daily[6].dt * 1000).toLocaleString()} Город: ${msg.text}.
+Чистота неба ${data.daily[6].weather[0].description},температура ${data.daily[6].temp.day} за цельсием, чувствуется как ${data.daily[6].feels_like.day} за цельсием, рассвет:${new Date(data.daily[6].sunrise * 1000).toLocaleString()} закат:${new Date(data.daily[6].sunset * 1000).toLocaleString()}`
+
+
+const prognoz=`${den1}  
+    ${den2}
+    ${den3}
+    ${den4}
+    ${den5}
+    ${den6}
+    ${den7}`
+
+    return prognoz
   };
   const govno = {
     "/start": privetstvie(),
     "/finish": "bye bye",
-    // "/weather": await getWeather(),
+    "/weather": await getWeather(),
   };
   const normalaise = msg.text.toLowerCase();
-  return bot.sendMessage(chatid, await getWeather());
+
+  return bot.sendMessage(chatid, await getWeather(msg.text))
 });
