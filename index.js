@@ -6,13 +6,14 @@ import telegramApi from "node-telegram-bot-api";
 const token = "5327333149:AAFywhnv5Q5s4rf3qoL48Zw6z51p6rf_1f4";
 import { weather } from "./service/weather.js";
 const bot = new telegramApi(token, { polling: true });
+
 export const app=express()
 
 
 
 bot.on("message", async (msg) => {
   const chatid = msg.chat.id;
-
+  "fgjdfgjdkfjgldfkjg"
   //   console.log(msg);
   const privetstvie = () => {
     const name = msg.chat.first_name;
