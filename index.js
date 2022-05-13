@@ -1,13 +1,16 @@
 // Use this token to access the HTTP API:
 // 5327333149:AAFywhnv5Q5s4rf3qoL48Zw6z51p6rf_1f4
 // Keep your token secure and store it safely, it can be used by anyone to control your bot.
+import express from "express";
 import telegramApi from "node-telegram-bot-api";
 const token = "5327333149:AAFywhnv5Q5s4rf3qoL48Zw6z51p6rf_1f4";
 import { weather } from "./service/weather.js";
 const bot = new telegramApi(token, { polling: true });
-import express from "express"
+const app=express()
 
-export const  app = express()
+app.listen(3001 || process.env.PORT, '0.0.0.0', () => {
+  console.log("Server is running.");
+});
 
 bot.on("message", async (msg) => {
   const chatid = msg.chat.id;
@@ -19,7 +22,7 @@ bot.on("message", async (msg) => {
     const privetstvie = `привет ${name || ""} ${secondname || ""}`;
     return privetstvie;
   };
-  const getWeather = async (gorod) => {
+  const getWeather = async () => {
     const data = await weather(msg.text);
     if (!data) {
       return "такого города нет"
