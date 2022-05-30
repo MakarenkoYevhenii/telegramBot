@@ -14,13 +14,6 @@ export const app=express()
 bot.on("message", async (msg) => {
   const chatid = msg.chat.id;
   "fgjdfgjdkfjgldfkjg"
-  //   console.log(msg);
-  const privetstvie = () => {
-    const name = msg.chat.first_name;
-    const secondname = msg.chat.last_name;
-    const privetstvie = `привет ${name || ""} ${secondname || ""}`;
-    return privetstvie;
-  };
   const getWeather = async () => {
     const data = await weather(msg.text);
     if (!data) {
@@ -53,11 +46,9 @@ const prognoz=`${den1}
     return prognoz
   };
   const govno = {
-    "/start": privetstvie(),
     "/finish": "bye bye",
     "/weather": await getWeather(),
   };
-  const normalaise = msg.text.toLowerCase();
 
   return bot.sendMessage(chatid, await getWeather(msg.text))
 })
